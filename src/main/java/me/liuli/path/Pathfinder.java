@@ -13,6 +13,23 @@ public class Pathfinder {
             new Cell(0, 0, 1),
             new Cell(0, 0, -1)
     };
+    public static Cell[] DIAGONAL_NEIGHBORS = new Cell[] {
+            new Cell(1, 1, 0),
+            new Cell(-1, -1, 0),
+            new Cell(1, -1, 0),
+            new Cell(-1, 1, 0),
+            new Cell(0, 1, 1),
+            new Cell(0, -1, -1),
+            new Cell(0, 1, -1),
+            new Cell(0, -1, 1),
+            // also include the non-diagonal neighbors
+            new Cell(1, 0, 0),
+            new Cell(-1, 0, 0),
+            new Cell(0, 1, 0),
+            new Cell(0, -1, 0),
+            new Cell(0, 0, 1),
+            new Cell(0, 0, -1)
+    };
 
     private final Cell start;
     private final Cell end;
@@ -26,7 +43,30 @@ public class Pathfinder {
         this.world = world;
     }
 
+    public Cell getStart() {
+        return start;
+    }
+
+    public Cell getEnd() {
+        return end;
+    }
+
+    public Cell[] getNeighbours() {
+        return neighbours;
+    }
+
+    public IWorldProvider getWorld() {
+        return world;
+    }
+
     public ArrayList<Cell> findPath() {
+        return findPath(Integer.MAX_VALUE);
+    }
+
+    /**
+     * @param maxLoops used to prevent infinite loops caused by invalid path
+     */
+    public ArrayList<Cell> findPath(int maxLoops) {
         final ArrayList<Cell> open = new ArrayList<>();
         final ArrayList<Cell> closed = new ArrayList<>();
 
@@ -34,9 +74,10 @@ public class Pathfinder {
 
         Cell current = null;
         int currentIdx;
+        int loops = 0;
 
         // Loop until you find the end
-        while (!open.isEmpty()) {
+        while (!open.isEmpty() && loops < maxLoops) {
             // Get the current node
             current = open.get(0);
             currentIdx = 0;
@@ -88,6 +129,8 @@ public class Pathfinder {
 
                 open.add(child);
             }
+
+            loops++;
         }
 
         final ArrayList<Cell> path = new ArrayList<>();
