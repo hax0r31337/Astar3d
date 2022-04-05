@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Pathfinder {
 
-    public static Cell[] COMMON_NEIGHBORS = new Cell[] {
+    public static final Cell[] COMMON_NEIGHBORS = new Cell[] {
             new Cell(1, 0, 0),
             new Cell(-1, 0, 0),
             new Cell(0, 1, 0),
@@ -13,7 +13,7 @@ public class Pathfinder {
             new Cell(0, 0, 1),
             new Cell(0, 0, -1)
     };
-    public static Cell[] DIAGONAL_NEIGHBORS = new Cell[] {
+    public static final Cell[] DIAGONAL_NEIGHBORS = new Cell[] {
             new Cell(1, 1, 0),
             new Cell(-1, -1, 0),
             new Cell(1, -1, 0),
